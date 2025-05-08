@@ -17,5 +17,7 @@ interface User {
 }
 
 - Designed specifically for objects.
+
 - Supports declaration merging (can be extended multiple times).
+
 - Can extend other interfaces and even types.
