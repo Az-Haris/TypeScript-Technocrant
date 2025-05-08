@@ -1,34 +1,102 @@
-# TypeScript Interview Questions Explained
+# 🎯 TypeScript Interview Questions – Explained Simply
 
-## 1. What are some differences between interfaces and types in TypeScript?
+TypeScript is gaining popularity for its ability to enhance JavaScript with static types, making code more robust and easier to maintain. In this blog post, we’ll break down **two essential TypeScript interview questions** in an easy-to-understand format.
 
-Both `interfaces` and `type` aliases are used to define custom types in TypeScript, but they have some key differences:
+---
 
-| Feature                | Interface | Type Alias |
-|------------------------|-----------|------------|
-| Extensibility          | Can be extended using `extends` | Cannot be extended |
-| Implementation         | Can be implemented by classes | Cannot be implemented |
-| Union/Intersection     | Cannot represent union types | Can represent unions (`|`) and intersections (`&`) |
-| Declaration Merging    | Supports merging of same-name declarations | Doesn't support merging |
-| Tuple Types            | Possible but less common | More commonly used for tuples |
+## 📘 Question 1: What Are Some Differences Between `interface` and `type` in TypeScript?
 
-**When to use which:**
-- Use `interfaces` for object shapes and when you need declaration merging
-- Use `type` for unions, intersections, or when you need to define aliases for primitive types
+### 🧠 TL;DR
+Both `interface` and `type` are used to define the **shape of an object**, but they have some **key differences** in flexibility and usage.
 
-**Example:**
-```typescript
-// Interface
-interface Person {
+### ✅ Interface
+```ts
+interface User {
   name: string;
   age: number;
 }
+Designed specifically for objects.
 
-// Type alias
-type Point = {
-  x: number;
-  y: number;
+Supports declaration merging (can be extended multiple times).
+
+Can extend other interfaces and even types.
+
+✅ Type Alias
+ts
+Copy
+Edit
+type User = {
+  name: string;
+  age: number;
+};
+Can define unions, intersections, tuples, and primitives too.
+
+No merging — once declared, it can’t be redefined.
+
+Slightly more versatile than interface.
+
+🔄 Comparison Table
+Feature	interface ✅	type ✅
+Object Shape	✔️	✔️
+Declaration Merging	✔️	❌
+Extend with extends	✔️	✔️ (limited)
+Union/Intersection	❌	✔️
+Tuples & Primitives	❌	✔️
+
+💡 Tip
+Use interface for class and object structure, and type for complex combinations like unions or tuples.
+
+🔑 Question 2: What Is the Use of keyof in TypeScript?
+🧠 TL;DR
+The keyof keyword returns a union of all keys of a given object type — making it super handy for building safe, dynamic functions.
+
+📦 Example
+ts
+Copy
+Edit
+type User = {
+  name: string;
+  age: number;
 };
 
-// Union type (only possible with type)
-type ID = string | number;
+type UserKeys = keyof User;  // "name" | "age"
+🧰 Practical Use Case
+You want a function that accepts only a valid key of a user object:
+
+ts
+Copy
+Edit
+function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
+}
+
+const user = { name: "Alice", age: 30 };
+
+const name = getValue(user, "name"); // ✅ Type: string
+const age = getValue(user, "age");   // ✅ Type: number
+// getValue(user, "email");          // ❌ Error: "email" is not a key of user
+🔐 Why It’s Powerful
+Enforces type safety.
+
+Prevents typos in key names.
+
+Allows you to write generic, reusable functions.
+
+📌 Summary
+Feature	Description
+interface vs type	interface is ideal for objects; type is more flexible (supports unions, primitives, etc.)
+keyof	Extracts key names from an object type as a union — great for safe dynamic access
+
+📘 More Interview Topics You Can Explore
+What is type inference and how it helps reduce boilerplate?
+
+Differences between any, unknown, and never.
+
+How enums simplify constant management.
+
+Using union and intersection types with real-world examples.
+
+How TypeScript improves project maintainability in large teams.
+
+🧑‍💻 Stay tuned for more beginner-friendly blog posts like this!
+Happy Coding 🚀
